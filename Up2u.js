@@ -3,7 +3,8 @@ var Scanner = require('./lib/Scanner');
 function Up2u(){
     this.hadError = false;
 
-    this.main = function (args){
+    this.main = function (){
+        var args = process.argv.slice(2);
         if (args.length > 1) {
             console.log("Usage: up2u [script]");
         } else if (args.length == 1) {
@@ -63,6 +64,6 @@ module.exports = Up2u;
 
 var myProgram = new Up2u();
 
-myProgram.runPrompt();
+myProgram.main();
 
 
