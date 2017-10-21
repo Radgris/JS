@@ -1,0 +1,12 @@
+{
+    "name": "Idunno",
+    "version": "0.2.0",
+    "description": "Stuff",
+    "main": "Up2u.js",
+    "scripts": {
+      "start": "node Up2u.js"
+    },
+    "dependencies": {
+      "readline-sync": "1.4.7"
+    }
+  }
