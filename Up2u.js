@@ -1,3 +1,5 @@
+var Scanner = require('./lib/Scanner');
+
 function Up2u(){
     this.hadError = false;
 
@@ -46,7 +48,7 @@ function Up2u(){
     
     }
 
-    this.error = function (line, msg){
+    this.error = function (line, message){
         this.report(line, "", message);
     }
 
@@ -56,6 +58,8 @@ function Up2u(){
     }
 
 }
+module.exports = Up2u;
+
 
 var myProgram = new Up2u();
 
