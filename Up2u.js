@@ -1,4 +1,8 @@
 var Scanner = require('./lib/Scanner');
+var TokenEnum = require('./lib/TokenType');
+var Parser = require('./lib/Parser');
+var AstPrinter = require('./lib/AstPrinter');
+
 
 function Up2u(){
     this.hadError = false;
@@ -39,18 +43,41 @@ function Up2u(){
     }
 
     this.run = function (source){
+
         var scanner = new Scanner(source);
         var tokens = scanner.scanTokens();
     
+        /*
         // For now, just print the tokens.
         tokens.forEach(function(element) {
             console.log(element)
         });
+        */
+
+        var parser = new Parser(tokens, this);
+        expression = parser.parse();
+
+
+    
+        // Stop if there was a syntax error.
+        if (this.hadError) return;
+    
+        console.log(new AstPrinter().print(expression));
     
     }
 
     this.error = function (line, message){
-        this.report(line, "", message);
+        if (Number.isInteger(line)){
+            this.report(line, "", message);
+        }
+        else{
+            if (line.type == TokenEnum.EOF) {
+                this.report(line.line, " at end", message);
+              } else {
+                this.report(line.line, " at '" + line.lexeme + "'", message);
+              }
+        }
+        
     }
 
     this.report = function (line, where, message){
@@ -59,7 +86,6 @@ function Up2u(){
     }
 
 }
-module.exports = Up2u;
 
 
 var myProgram = new Up2u();
