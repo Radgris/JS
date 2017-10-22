@@ -14,6 +14,10 @@ function GenerateAst(){
             "Literal  : Object value",
             "Unary    : Token operator, Expr right"
         ]);
+        this.defineAst(outputDir, "Stmt", [
+            "Expression : Expr expression",
+            "Print      : Expr expression"
+        ]);
     }
 
     this.defineVisitor = function(logStream, baseName,  types) {
@@ -32,7 +36,7 @@ function GenerateAst(){
     }
 
     this.defineAst = function(outputDir, baseName, types){
-        path = outputDir + "/" + baseName + ".js";
+        path = outputDir + "/" + baseName + ".java";
         console.log(path);
         var fs = require('fs');
         //TODO 

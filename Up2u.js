@@ -50,8 +50,8 @@ function Up2u(){
 
     this.run = function (source){
 
-        var scanner = new Scanner(source);
-        var tokens = scanner.scanTokens();
+        let scanner = new Scanner(source, this);
+        let tokens = scanner.scanTokens();
     
         /*
         // For now, just print the tokens.
@@ -61,14 +61,14 @@ function Up2u(){
         */
 
         var parser = new Parser(tokens, this);
-        expression = parser.parse();
+        let statements = parser.parse();
 
 
     
         // Stop if there was a syntax error.
         if (this.hadError) return;
     
-        this.interpreter.interpret(expression);
+        this.interpreter.interpret(statements);
         //console.log(new AstPrinter().print(expression));
     
     }
