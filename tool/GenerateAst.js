@@ -101,7 +101,3 @@ function GenerateAst(){
     }
 
 }
-
-
-myProgram = new GenerateAst();
-myProgram.main();

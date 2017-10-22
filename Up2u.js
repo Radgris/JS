@@ -2,11 +2,14 @@ var Scanner = require('./lib/Scanner');
 var TokenEnum = require('./lib/TokenType');
 var Parser = require('./lib/Parser');
 var AstPrinter = require('./lib/AstPrinter');
+var Interpreter = require('./lib/Interpreter');
 
 
 function Up2u(){
     this.hadError = false;
-
+    this.hadRuntimeError  = false;
+    this.interpreter = new Interpreter(this);
+    
     this.main = function (){
         var args = process.argv.slice(2);
         if (args.length > 1) {
@@ -29,6 +32,9 @@ function Up2u(){
         if (this.hadError){
             process.exit(65);
         } 
+        if (hadRuntimeError){
+            process.exit(70);
+        }
     }
 
     //TESTED
@@ -62,8 +68,14 @@ function Up2u(){
         // Stop if there was a syntax error.
         if (this.hadError) return;
     
-        console.log(new AstPrinter().print(expression));
+        this.interpreter.interpret(expression);
+        //console.log(new AstPrinter().print(expression));
     
+    }
+
+    this.runtimeError = function(error){
+        console.log(error + "\n[line " + error.token.line + "]");
+        this.hadRuntimeError = true;
     }
 
     this.error = function (line, message){
