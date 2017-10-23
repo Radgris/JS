@@ -32,7 +32,7 @@ function Up2u(){
         if (this.hadError){
             process.exit(65);
         } 
-        if (hadRuntimeError){
+        if (this.hadRuntimeError){
             process.exit(70);
         }
     }
@@ -53,12 +53,6 @@ function Up2u(){
         let scanner = new Scanner(source, this);
         let tokens = scanner.scanTokens();
     
-        /*
-        // For now, just print the tokens.
-        tokens.forEach(function(element) {
-            console.log(element)
-        });
-        */
 
         var parser = new Parser(tokens, this);
         let statements = parser.parse();
@@ -69,12 +63,12 @@ function Up2u(){
         if (this.hadError) return;
     
         this.interpreter.interpret(statements);
-        //console.log(new AstPrinter().print(expression));
     
     }
 
     this.runtimeError = function(error){
-        console.log(error + "\n[line " + error.token.line + "]");
+        //throw error;
+        console.log(error.message + "\n[line " + error.token.line + "]");
         this.hadRuntimeError = true;
     }
 
