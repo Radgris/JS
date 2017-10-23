@@ -27,7 +27,7 @@ function Up2u(){
         var path = process.cwd();
         var buffer = fs.readFileSync(path + "\\scripts\\" + file_name);
     
-        this.run(buffer.toString());
+        this.run(buffer.toString(), false);
     
         if (this.hadError){
             process.exit(65);
@@ -42,13 +42,13 @@ function Up2u(){
         
         while(true){
             const readlineSync = require('readline-sync');
-            this.run( readlineSync.question('> '));
+            this.run( readlineSync.question('> '), true);
             this.hadError = false;
         }
         
     }
 
-    this.run = function (source){
+    this.run = function (source, prompt){
 
         let scanner = new Scanner(source, this);
         let tokens = scanner.scanTokens();
@@ -62,7 +62,7 @@ function Up2u(){
         // Stop if there was a syntax error.
         if (this.hadError) return;
     
-        this.interpreter.interpret(statements);
+        this.interpreter.interpret(statements, prompt);
     
     }
 

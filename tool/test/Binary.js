@@ -5,7 +5,8 @@ function Binary(left, operator, right){
     this.right = right;
 
     this.accept = function(visitor){
-        return visitor.visitBinaryExpr(this);
+        let result = visitor.visitBinaryExpr(this);
+        return result;
     }
 }
 
